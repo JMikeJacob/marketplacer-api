@@ -1,7 +1,12 @@
 global.config = {
-    discounts: {
-        20: 0.1,
-        50: 0.15,
-        100: 0.2
-    }
+    discounts: [{
+        threshold: 100,
+        discount: 0.2
+    }, {
+        threshold: 50,
+        discount: 0.15
+    }, {
+        threshold: 20,
+        discount: 0.1
+    }]
 };
