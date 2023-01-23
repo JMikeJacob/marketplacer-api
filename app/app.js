@@ -1,3 +1,4 @@
+require('dotenv').config();
 require('./utils/config');
 
 const factory = require('./utils/factory')();
@@ -9,5 +10,4 @@ factory.setRepository(repository);
 factory.setController(controller);
 
 const cli = require('./views/cli');
-
 cli(controller);
