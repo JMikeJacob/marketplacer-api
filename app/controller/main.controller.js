@@ -1,3 +1,5 @@
+const errors = require("../utils/errors");
+
 const controller = (repository) => {
     return {
         seedProducts: () => {
@@ -22,7 +24,7 @@ const controller = (repository) => {
                 const cart = repository.getCart();
 
                 if (!cart) {
-                    throw new Error('cart not found');
+                    throw new Error(errors.cart_not_found);
                 }
 
                 return cart;
@@ -35,7 +37,7 @@ const controller = (repository) => {
                 const cart = repository.getCart();
 
                 if (!cart) {
-                    throw new Error('cart not found');
+                    throw new Error(errors.cart_not_found);
                 }
                 
                 const originalTotalPrice = cart.reduce((accumulator, product) => accumulator + product.price, 0);

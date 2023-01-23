@@ -1,4 +1,5 @@
 const initProducts = require('../data/products.json');
+const errors = require('../utils/errors');
 const repository = () => {
     /*
         productsData schema
@@ -21,14 +22,24 @@ const repository = () => {
             }
         }
     */
-    let productsDataObject = {};
+    let productsDataObject = {}; // allows for faster get of specific product for larger inventory
+    /*
+        shoppingCartData schema
+        [
+            {
+                productId: string,
+                name: string,
+                price: number
+            }
+        ]
+    */
     const shoppingCartData = [];
 
     this.seedProducts = () => {
         const transformedProducts = initProducts.map((p) => {
             const productId = p.uuid.toString();
             const numericPrice = parseFloat(p.price);
-            const transformedProduct = {
+            const transformedProduct = { // converts seed data to conform to schema
                 ...p,
                 productId: productId,
                 price: numericPrice
@@ -51,7 +62,7 @@ const repository = () => {
         try {
             const product = productsDataObject[productId];
             if (!productsDataObject) {
-                throw new Error('Product not found!');
+                throw new Error(errors.product_not_found);
             }
             return product;
         } catch (err) {
@@ -62,7 +73,7 @@ const repository = () => {
     this.addProductToCart = (productId) => {
         try {
             if (!productsDataObject[productId]) {
-                throw new Error('Product not found!');
+                throw new Error(errors.product_not_found);
             }
 
             shoppingCartData.push(productsDataObject[productId]);
