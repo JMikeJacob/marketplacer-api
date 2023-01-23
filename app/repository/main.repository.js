@@ -1,6 +1,7 @@
 const initProducts = require('../data/products.json');
 const repository = () => {
-    const productsData = [];
+    let productsData = [];
+    let productsDataObject = {};
     /*
         productsData schema
         [
@@ -15,11 +16,15 @@ const repository = () => {
 
     this.seedProducts = () => { // TO DO: move out initProducts to decouple repository from seed location
         const transformedProducts = initProducts.map((p) => {
-            return {
+            const productId = p.uuid.toString();
+            const numericPrice = parseFloat(p.price);
+            const transformedProduct = {
                 ...p,
-                uuid: p.uuid.toString(),
-                price: parseFloat(p.price)
+                productId: productId,
+                price: numericPrice
             };
+            productsDataObject[productId] = transformedProduct;
+            return transformedProduct;
         });
         productsData = productsData.concat(transformedProducts);
     }
@@ -44,21 +49,27 @@ const repository = () => {
 
     this.getProduct = (productId) => {
         try {
-            const product = productsData.find((p) => productId === p.id);
+            const product = productsDataObject[productId];
+            if (!productsDataObject) {
+                throw new Error('Product not found!');
+            }
             return product;
         } catch (err) {
             throw new Error('Repository error');
         }
     }
 
-    this.addProductToCart = (userId, product) => {
+    this.addProductToCart = (userId, productId) => {
         try {
+            if (!productsDataObject[productId]) {
+                throw new Error('Product not found!');
+            }
             if (!shoppingCartData[userId]) {
                 shoppingCartData[userId] = [];
             }
-            shoppingCartData[userId].push(product);
+            shoppingCartData[userId].push(productsDataObject[productId]);
         } catch (err) {
-            throw new Error('Repository error adding product to cart');
+            throw err;
         }
     }
 
@@ -66,7 +77,7 @@ const repository = () => {
         try {
             return shoppingCartData[userId] || [];
         } catch (err) {
-            throw new Error('Repository error getting cart');
+            throw err;
         }
     }
 

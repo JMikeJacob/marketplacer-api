@@ -3,11 +3,15 @@ const controller = (repository) => {
         seedProducts: () => {
             repository.seedProducts();
         },
-        addProductToCart: (userId, product) => {
-            repository.addProductToCart(userId, product);
+        addProductToCart: (userId, productId) => {
+            try {
+                repository.addProductToCart(userId, productId);
+            } catch (err) {
+                throw err;
+            }
         },
         getProducts: () => {
-            return repository.getProducts;
+            return repository.getProducts();
         },
         getCart: (userId) => {
             try {
@@ -30,7 +34,7 @@ const controller = (repository) => {
                     throw new Error('cart not found');
                 }
                 
-                const originalTotalPrice = cart.reduce((accumulator, product) => accumulator + product.price);
+                const originalTotalPrice = cart.reduce((accumulator, product) => accumulator + product.price, 0);
                 const checkoutDetails = {
                     products: cart,
                     originalTotalPrice: originalTotalPrice
