@@ -9,5 +9,6 @@ const controller = require('./controller/main.controller')(repository);
 factory.setRepository(repository);
 factory.setController(controller);
 
+controller.seedProducts();
 const cli = require('./views/cli');
 cli(controller);

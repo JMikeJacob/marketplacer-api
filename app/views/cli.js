@@ -7,9 +7,7 @@ const cache = {
 };
 
 const cli = async function(controller) {
-    try {
-        controller.seedProducts();
-        
+    try {        
         let isInProductsScreen = true;
 
         while (true) { // keeps CLI alive until user exits
