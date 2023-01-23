@@ -1,20 +1,30 @@
 const initProducts = require('../data/products.json');
 const repository = () => {
-    let productsData = [];
-    let productsDataObject = {};
     /*
         productsData schema
         [
             {
-                uuid: string,
+                productId: string,
                 name: string,
                 price: number
             }
         ]
     */
-    const shoppingCartData = {}; // allows multiple users to have different carts
+    let productsData = [];
+    /*
+        productsDataObject schema
+        {
+            productId: {
+                productId: string,
+                name: string,
+                price: number
+            }
+        }
+    */
+    let productsDataObject = {};
+    const shoppingCartData = [];
 
-    this.seedProducts = () => { // TO DO: move out initProducts to decouple repository from seed location
+    this.seedProducts = () => {
         const transformedProducts = initProducts.map((p) => {
             const productId = p.uuid.toString();
             const numericPrice = parseFloat(p.price);
@@ -29,21 +39,11 @@ const repository = () => {
         productsData = productsData.concat(transformedProducts);
     }
 
-    /*
-
-        Load a list of products from a file.
-        List product details to the user.
-        Add products to a Shopping Cart.
-        Apply promotional discounts.
-        Calculate and display the total cost.
-
-    */
-
     this.getProducts = () => {
         try {
             return productsData;
         } catch (err) {
-            throw new Error('Repository error');
+            throw err;
         }
     }
 
@@ -55,27 +55,25 @@ const repository = () => {
             }
             return product;
         } catch (err) {
-            throw new Error('Repository error');
+            throw err;
         }
     }
 
-    this.addProductToCart = (userId, productId) => {
+    this.addProductToCart = (productId) => {
         try {
             if (!productsDataObject[productId]) {
                 throw new Error('Product not found!');
             }
-            if (!shoppingCartData[userId]) {
-                shoppingCartData[userId] = [];
-            }
-            shoppingCartData[userId].push(productsDataObject[productId]);
+
+            shoppingCartData.push(productsDataObject[productId]);
         } catch (err) {
             throw err;
         }
     }
 
-    this.getCart = (userId) => {
+    this.getCart = () => {
         try {
-            return shoppingCartData[userId] || [];
+            return shoppingCartData;
         } catch (err) {
             throw err;
         }

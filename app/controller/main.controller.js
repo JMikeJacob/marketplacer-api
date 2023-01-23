@@ -1,11 +1,15 @@
 const controller = (repository) => {
     return {
         seedProducts: () => {
-            repository.seedProducts();
-        },
-        addProductToCart: (userId, productId) => {
             try {
-                repository.addProductToCart(userId, productId);
+                repository.seedProducts();
+            } catch (err) {
+                throw err;
+            }
+        },
+        addProductToCart: (productId) => {
+            try {
+                repository.addProductToCart(productId);
             } catch (err) {
                 throw err;
             }
@@ -13,9 +17,9 @@ const controller = (repository) => {
         getProducts: () => {
             return repository.getProducts();
         },
-        getCart: (userId) => {
+        getCart: () => {
             try {
-                const cart = repository.getCart(userId);
+                const cart = repository.getCart();
 
                 if (!cart) {
                     throw new Error('cart not found');
@@ -26,9 +30,9 @@ const controller = (repository) => {
                 throw err;
             }
         },
-        getCheckoutDetails: (userId) => {
+        getCheckoutDetails: () => {
             try {
-                const cart = repository.getCart(userId);
+                const cart = repository.getCart();
 
                 if (!cart) {
                     throw new Error('cart not found');
