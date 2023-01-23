@@ -6,11 +6,13 @@ const renderCheckoutDetails = (controller, userId) => {
   
     const checkoutProducts = checkoutDetails.products;
     printProductList('Products in Shopping Cart:', checkoutProducts);
-    console.log('');
     if (checkoutDetails.isDiscounted) {
-      console.log(`Discount applied: ${checkoutDetails.discountAmount * 100}% off on total greater than $${checkoutDetails.discountThreshold}`);
-      console.log(`TOTAL: $${checkoutDetails.discountedTotalPrice.toFixed(2)}`);
+      console.log(`\nDiscount applied: ${checkoutDetails.discountValue * 100}% off on total greater than $${checkoutDetails.discountThreshold}`);
+      console.log(`ORIGINAL TOTAL: $${checkoutDetails.originalTotalPrice.toFixed(2)}`);
+      console.log(`AMOUNT DISCOUNT: $${checkoutDetails.discountAmount.toFixed(2)}`);
+      console.log(`\nTOTAL: $${checkoutDetails.discountedTotalPrice.toFixed(2)}`);
     } else {
+      console.log('\nNo Discount Applied');
       console.log(`TOTAL: $${checkoutDetails.originalTotalPrice.toFixed(2)}`);
     }
 };
@@ -19,7 +21,7 @@ const renderCheckoutScreen = async (cache, controller, userId) => {
     return new Promise((resolve, reject) => {
       try {
         const rl = readline.createInterface(process.stdin, process.stdout);
-        rl.setPrompt('Do you want to check out? ');
+        rl.setPrompt('Do you want to check out? (Y/N): ');
     
         renderCheckoutDetails(controller, userId);
         rl.prompt();

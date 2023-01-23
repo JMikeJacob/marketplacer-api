@@ -61,7 +61,7 @@ const repository = () => {
     this.getProduct = (productId) => {
         try {
             const product = productsDataObject[productId];
-            if (!productsDataObject) {
+            if (!productsDataObject[productId]) {
                 throw new Error(errors.product_not_found);
             }
             return product;

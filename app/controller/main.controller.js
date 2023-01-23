@@ -43,7 +43,8 @@ const controller = (repository) => {
                 const originalTotalPrice = cart.reduce((accumulator, product) => accumulator + product.price, 0);
                 const checkoutDetails = {
                     products: cart,
-                    originalTotalPrice: originalTotalPrice
+                    originalTotalPrice: originalTotalPrice,
+                    isDiscounted: false
                 };
 
                 const discounts = global.config.discounts;
@@ -56,7 +57,8 @@ const controller = (repository) => {
                             checkoutDetails.isDiscounted = true;
                             checkoutDetails.discountedTotalPrice = discountedTotalPrice;
                             checkoutDetails.discountThreshold = discounts[i].threshold;
-                            checkoutDetails.discountAmount = discounts[i].discount;
+                            checkoutDetails.discountValue = discounts[i].discount;
+                            checkoutDetails.discountAmount = originalTotalPrice * discounts[i].discount;
                             break;
                         }
                     }
