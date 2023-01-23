@@ -2,6 +2,12 @@
 
 CLI application for a simple checkout system using Node.js
 
+## Prerequisites
+
+Node.js should be installed in your system.
+
+Link to setup guide: https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
+
 ## Installation
 
 Run npm install in the root directory to install dependencies
