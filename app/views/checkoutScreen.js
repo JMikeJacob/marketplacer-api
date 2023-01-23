@@ -20,6 +20,7 @@ const renderCheckoutDetails = (controller, userId) => {
 const renderCheckoutScreen = async (cache, controller, userId) => {
     return new Promise((resolve, reject) => {
       try {
+        console.log('Checkout');
         const rl = readline.createInterface(process.stdin, process.stdout);
         rl.setPrompt('Do you want to check out? (Y/N): ');
     

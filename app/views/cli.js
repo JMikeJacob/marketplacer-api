@@ -14,10 +14,10 @@ const cli = async function(controller) {
             console.clear();
             if (isInProductsScreen) {
                 const productAnswer = await renderProductsScreen(cache, controller);
-                if (productAnswer === 'q') {
+                if (productAnswer == 2) {
                     console.log('\nThank you for visiting!');
                     process.exit(0);
-                } else if (productAnswer == 0) { // go to checkout screen
+                } else if (productAnswer == 1) { // go to checkout screen
                     isInProductsScreen = false;
                 }
             } else {
