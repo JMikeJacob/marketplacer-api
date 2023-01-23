@@ -1,5 +1,5 @@
 require('dotenv').config();
-require('./utils/config');
+global.config = require('./utils/config')();
 
 const factory = require('./utils/factory')();
 

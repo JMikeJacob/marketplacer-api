@@ -39,7 +39,6 @@ const controller = (repository) => {
                 if (!cart) {
                     throw new Error(errors.cart_not_found);
                 }
-                
                 const originalTotalPrice = cart.reduce((accumulator, product) => accumulator + product.price, 0);
                 const checkoutDetails = {
                     products: cart,
@@ -47,7 +46,7 @@ const controller = (repository) => {
                     isDiscounted: false
                 };
 
-                const discounts = global.config.discounts;
+                const discounts = global.config.app.discounts;
                 if (discounts && discounts.length > 0) {
                     let discountedTotalPrice = originalTotalPrice;
                     // check for discounts
@@ -63,7 +62,6 @@ const controller = (repository) => {
                         }
                     }
                 }
-
                 return checkoutDetails;
             } catch (err) {
                 throw err;

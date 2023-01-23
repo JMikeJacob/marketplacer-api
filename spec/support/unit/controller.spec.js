@@ -1,4 +1,4 @@
-const config = require('../../../app/utils/config');
+const config = require('../../../app/utils/config')();
 global.config = config;
 const controllerCRUD = require('../../../app/controller/main.controller');
 const errors = require('../../../app/utils/errors');
