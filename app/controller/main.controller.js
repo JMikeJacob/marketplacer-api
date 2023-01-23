@@ -6,6 +6,9 @@ const controller = (repository) => {
         addProductToCart: (userId, product) => {
             repository.addProductToCart(userId, product);
         },
+        getProducts: () => {
+            return repository.getProducts;
+        },
         getCart: (userId) => {
             try {
                 const cart = repository.getCart(userId);

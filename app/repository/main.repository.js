@@ -1,5 +1,5 @@
 const initProducts = require('../data/products.json');
-const repository = (dataStore) => {
+const repository = () => {
     const productsData = [];
     /*
         productsData schema
@@ -12,7 +12,6 @@ const repository = (dataStore) => {
         ]
     */
     const shoppingCartData = {}; // allows multiple users to have different carts
-    const __self = this;
 
     this.seedProducts = () => { // TO DO: move out initProducts to decouple repository from seed location
         const transformedProducts = initProducts.map((p) => {

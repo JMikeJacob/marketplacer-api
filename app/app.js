@@ -1,41 +1,27 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const readline = require('readline');
+const factory = require('./utils/factory')();
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const repository = require('./repository/main.repository')();
+const controller = require('./controller/main.controller')(repository);
 
-var app = express();
+factory.setRepository(repository);
+factory.setController(controller);
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+const mainMenu = () => {
+  return new Promise((resolve, reject) => {
+    const products = controller.getProducts();
+    const cart = controller.getCart();
+    const productsListMessage = 'List of Products:\n';
+    const cartMessage = 'Products in Cart:\n';
+    for (let i = 0; i < products.length; i++) {
+      productsListMessage += `${i + 1}. ${products.name} - ${products.price}`;
+    }
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
-});
-
-module.exports = app;
+    rl.question(`Press button to add item to your cart`)
+  });
+}
