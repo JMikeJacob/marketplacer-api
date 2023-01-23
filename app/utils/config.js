@@ -1,5 +1,5 @@
 global.config = {
-    discounts: [{
+    discounts: process.env.DISCOUNTS ? JSON.parse(process.env.DISCOUNTS) : [{
         threshold: 100,
         discount: 0.2
     }, {
